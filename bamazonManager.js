@@ -148,7 +148,37 @@ function AddInventory() {
               "UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?",
               [addition, ItemID]
             );
+            console.log("items added successfully");
+            connection.end();
           });
       });
   });
+}
+
+function AddProduct() {
+  inquire
+    .prompt([
+      {
+        name: "name",
+        message: "Name the item you want to add"
+      },
+      {
+        name: "price",
+        message: "what is the unit price for this item?"
+      },
+      {
+        name: "quantity",
+        message: "How much do we have in stock?"
+      }
+    ])
+    .then(function(answer) {
+      var sql =
+        "INSERT INTO products (product_name, product_price,stock_quantity) VALUES (?)";
+      var values = [answer.name, answer.price, answer.quantity];
+      connection.query(sql, [values], function(err, result) {
+        if (err) throw err;
+        console.log("Item inserted" + result.affectedRows);
+      });
+      connection.end();
+    });
 }
