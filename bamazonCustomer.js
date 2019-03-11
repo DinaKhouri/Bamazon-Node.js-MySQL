@@ -71,7 +71,10 @@ function runapp() {
         for (i = 0; i < results.length; i++) {
           //console.log(results[i]);
           if (results[i] === customerAnswer) {
-            console.log(results[i]);
+            //i used res[i] here instead of results[i],because results[i] returns a string while res[i] still has the product info and can pull the specific field we want to use
+            //so this whole comparison thing is to figure which i the user picks so we can go back to the original array and grab info
+            console.log(res[i]);
+            console.log(res[i].product_price);
           }
         }
       });
