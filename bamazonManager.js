@@ -73,3 +73,27 @@ function viewProducts() {
     console.log(results);
   });
 }
+
+function viewLow() {
+  connection.query("select * from products", function(err, res) {
+    if (err) throw err;
+    var results = [];
+    for (var i = 0; i < res.length; i++) {
+      if (res[i].stock_quantity < 5) {
+        results.push(
+          res[i].item_id +
+            "||" +
+            "Name: " +
+            res[i].product_name +
+            "||" +
+            "Price: " +
+            res[i].product_price +
+            "||" +
+            "In Stock: " +
+            res[i].stock_quantity
+        );
+      }
+    }
+    console.log(results);
+  });
+}
