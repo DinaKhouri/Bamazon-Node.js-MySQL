@@ -43,8 +43,9 @@ function startapp() {
 function runapp() {
   connection.query("select * from products", function(err, res) {
     if (err) throw err;
+    var results = [];
     for (var i = 0; i < res.length; i++) {
-      console.log(
+      results.push(
         res[i].item_id +
           "||" +
           "Name: " +
@@ -54,5 +55,25 @@ function runapp() {
           res[i].product_price
       );
     }
+    inquire
+      .prompt([
+        {
+          type: "list",
+          name: "Picked",
+          message: "Pick the item you want to buy",
+          choices: results
+        }
+      ])
+      .then(function(answer) {
+        var customerAnswer = answer.Picked;
+        // console.log(customerAnswer);
+        //console.log(answer.Picked);
+        for (i = 0; i < results.length; i++) {
+          //console.log(results[i]);
+          if (results[i] === customerAnswer) {
+            console.log(results[i]);
+          }
+        }
+      });
   });
 }
