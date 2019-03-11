@@ -77,6 +77,7 @@ function runapp() {
             console.log(res[i].product_price);
             var ProductPrice = res[i].product_price;
             var ProductQuantitiy = res[i].stock_quantity;
+            var ItemID = res[i].item_id;
             //start another prompt
             inquire
               .prompt([
@@ -114,6 +115,10 @@ function runapp() {
                         console.log(
                           "Purchase approved with the Total Price of : " +
                             totalPrice
+                        );
+                        connection.query(
+                          "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
+                          [QuantitiyNeeded, ItemID]
                         );
                         connection.end();
                         //we need to update the database
