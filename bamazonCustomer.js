@@ -75,6 +75,53 @@ function runapp() {
             //so this whole comparison thing is to figure which i the user picks so we can go back to the original array and grab info
             console.log(res[i]);
             console.log(res[i].product_price);
+            var ProductPrice = res[i].product_price;
+            var ProductQuantitiy = res[i].stock_quantity;
+            //start another prompt
+            inquire
+              .prompt([
+                {
+                  type: "list",
+                  name: "Price",
+                  message:
+                    "This Item Costs " +
+                    ProductPrice +
+                    " do you still want to make the Purchase?",
+                  choices: ["Yes", "No"]
+                }
+              ])
+              .then(function(answer) {
+                if (answer.Price === "No") {
+                  console.log("Thank you, Please Visit our store again");
+                  connection.end();
+                }
+                if (answer.Price === "Yes") {
+                  //console.log("awesome!");
+                  inquire
+                    .prompt([
+                      {
+                        name: "Quantity",
+                        message: "Awesome! How Many do you need?"
+                      }
+                    ])
+                    .then(function(answer) {
+                      var QuantitiyNeeded = answer.Quantity;
+                      var totalPrice = QuantitiyNeeded * ProductPrice;
+                      if (ProductQuantitiy < QuantitiyNeeded) {
+                        console.log("Sorry we dont have enough in stock");
+                      }
+                      if (ProductQuantitiy >= QuantitiyNeeded) {
+                        console.log(
+                          "Purchase approved with the Total Price of : " +
+                            totalPrice
+                        );
+                        connection.end();
+                        //we need to update the database
+                      }
+                      //console.log(totalPrice);
+                    });
+                }
+              });
           }
         }
       });
