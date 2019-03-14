@@ -31,3 +31,4 @@ values
 ("eggs","5.0","1000","0.0")
 ;
 select * from products;
+select * from departments;
