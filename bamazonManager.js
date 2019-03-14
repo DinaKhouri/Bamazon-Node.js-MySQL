@@ -67,7 +67,10 @@ function viewProducts() {
           res[i].product_price +
           "||" +
           "In Stock: " +
-          res[i].stock_quantity
+          res[i].stock_quantity +
+          "||" +
+          "Department: " +
+          res[i].department_name
       );
     }
     console.log(results);
@@ -90,7 +93,10 @@ function viewLow() {
             res[i].product_price +
             "||" +
             "In Stock: " +
-            res[i].stock_quantity
+            res[i].stock_quantity +
+            "||" +
+            "Department: " +
+            res[i].department_name
         );
       }
     }
@@ -113,7 +119,10 @@ function AddInventory() {
           res[i].product_price +
           "||" +
           "In Stock: " +
-          res[i].stock_quantity
+          res[i].stock_quantity +
+          "||" +
+          "Department: " +
+          res[i].department_name
       );
     }
     inquire
@@ -169,12 +178,22 @@ function AddProduct() {
       {
         name: "quantity",
         message: "How much do we have in stock?"
+      },
+      {
+        name: "department",
+        message: "To what department it belongs?"
       }
     ])
     .then(function(answer) {
       var sql =
-        "INSERT INTO products (product_name, product_price,stock_quantity) VALUES (?)";
-      var values = [answer.name, answer.price, answer.quantity];
+        "INSERT INTO products (product_name,product_sales,product_price,stock_quantity,department_name) VALUES (?)";
+      var values = [
+        answer.name,
+        "0.0",
+        answer.price,
+        answer.quantity,
+        answer.department
+      ];
       connection.query(sql, [values], function(err, result) {
         if (err) throw err;
         console.log("Item inserted" + result.affectedRows);

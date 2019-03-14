@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquire = require("inquirer");
+var table = require("table");
 
 var connection = mysql.createConnection({
   host: "localhost",
@@ -39,7 +40,24 @@ function WhatDoYouwantToDo() {
       }
     });
 }
-
+function viewProductsByDepartment() {
+  //make it work first then worry about table
+  connection.query(
+    " SELECT " +
+      "   departments.department_id, " +
+      "   departments.department_name, " +
+      "   departments.over_head_costs, " +
+      "FROM products  " +
+      "   RIGHT JOIN departments  ON products.department_name = departments.department_name " +
+      "GROUP BY " +
+      "   department_id, " +
+      "   department_name, " +
+      "   over_head_costs",
+    function(err, res) {
+      console.log(res);
+    }
+  );
+}
 function CreateNewDepartment() {
   inquire
     .prompt([
