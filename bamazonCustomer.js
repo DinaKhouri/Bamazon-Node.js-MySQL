@@ -120,6 +120,10 @@ function runapp() {
                           "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
                           [QuantitiyNeeded, ItemID]
                         );
+                        connection.query(
+                          "UPDATE products SET product_sales = product_sales + ? WHERE item_id = ?",
+                          [totalPrice, ItemID]
+                        );
                         connection.end();
                         //we need to update the database
                       }
