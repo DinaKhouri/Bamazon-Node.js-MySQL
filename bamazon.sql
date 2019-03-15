@@ -14,7 +14,7 @@ primary key(item_id)
 
 create table departments(
 department_id int not null auto_increment,
-departemnt_name varchar(45) null,
+department_name varchar(45) null,
 over_head_costs int(10) ,
 primary key (department_id)
 );
@@ -31,5 +31,23 @@ values
 ("milk","3.0","1000","0.0","food"),
 ("eggs","5.0","1000","0.0","food")
 ;
+
+insert into departments(department_name,over_head_costs)
+values("hygeine","10000.0"),
+("food","10000.0"),
+("not food","10000.0");
+
 select * from products;
 select * from departments;
+
+ select departments.department_id,
+ departments.department_name,
+ departments.over_head_costs,
+ products.product_sales
+ from departments
+ left join products on
+ departments.department_name = products.department_name
+ GROUP BY  
+       departments.department_id,
+ departments.department_name,
+ departments.over_head_costs;

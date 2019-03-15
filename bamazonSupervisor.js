@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "d1i2n3a4",
+  password: "",
   database: "bamazon"
 });
 connection.connect(function(err) {
@@ -43,11 +43,16 @@ function WhatDoYouwantToDo() {
 }
 function viewProductsByDepartment() {
   //make it work first then worry about table
-  connection.query("SELECT * FROM products", function(err, res) {
-    if (err) throw err;
-    console.table(res);
-  });
+
+  connection.query(
+    " SELECT  departments.department_id,departments.department_name,departments.over_head_costs,SUM(products.product_sales) as product_sales, SUM(products.product_sales) - departments.over_head_costs as total_profit FROM products RIGHT JOIN departments ON products.department_name = departments.department_name GROUP BY departments.department_id, departments.department_name,departments.over_head_costs",
+    function(err, res) {
+      if (err) throw err;
+      console.table(res);
+    }
+  );
 }
+
 function CreateNewDepartment() {
   inquire
     .prompt([
