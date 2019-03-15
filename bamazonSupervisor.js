@@ -66,7 +66,7 @@ function CreateNewDepartment() {
     ])
     .then(function(answer) {
       var sql =
-        "INSERT INTO departments (departemnt_name, over_head_costs) VALUES (?)";
+        "INSERT INTO departments (department_name, over_head_costs) VALUES (?)";
       var values = [answer.name, answer.overhead];
       connection.query(sql, [values], function(err, result) {
         if (err) throw err;
