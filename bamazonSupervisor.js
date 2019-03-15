@@ -42,8 +42,7 @@ function WhatDoYouwantToDo() {
     });
 }
 function viewProductsByDepartment() {
-  //make it work first then worry about table
-
+  // source for summing http://www.mysqltutorial.org/tryit/query/mysql-sum/#4
   connection.query(
     " SELECT  departments.department_id,departments.department_name,departments.over_head_costs,SUM(products.product_sales) as product_sales, SUM(products.product_sales) - departments.over_head_costs as total_profit FROM products RIGHT JOIN departments ON products.department_name = departments.department_name GROUP BY departments.department_id, departments.department_name,departments.over_head_costs",
     function(err, res) {
